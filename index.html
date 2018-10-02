@@ -2,45 +2,50 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="index.css">
     <title>Kunst</title>
   </head>
   <body>
-
+    <center>
     <h1>Kunst</h1>
     <h4>By Eben and Haley</h4>
 
-    <div id="signup-form">
-      <button id="signUpButton">SIGN UP</button>
-      <button id="SignInButton">LOG IN</button>
-      <p class="hint-text">Enter your name to get started</p>
-      <div class="form-group ">
+    <button id="signUpButton">SIGN UP</button>
+    <button id="signInButton">LOG IN</button>
+
+    <div id="signUpModal" class="modal" style="display: none">
+      <div id="signup-form" class="modal-content">
+        <span class="close" id="signUpClose">&times;</span>
+        <p class="hint-text">Enter your name to get started</p>
         <form class="form-control signup-input" id="signUpForm">
           <input type="text" name="name" placeholder="Please type your name">
           <button type="submit" name="submit">Submit yo name!</button>
         </form>
       </div>
-      <div id="sign-in">
+    </div>
+
+    <div id="signInModal" class="modal" style="display: none">
+      <div id="sign-in" class="modal-content">
+        <span class="close" id="signInClose">&times;</span>
+        <p class="hint-text">Enter your name to log in</p>
         <form class="form-control signup-input" id="signInForm">
           <input type="text" name="name" placeholder="Please type your name">
           <button type="submit" name="submit">Submit yo name!</button>
         </form>
       </div>
-
-      <img src="https://i2.wp.com/blog.bridgemanimages.com/wp-content/uploads/2017/01/death-life-gustav-klimt.jpg?fit=805%2C340" >
     </div>
+
+    <br>
+    <br>
+
+    <img src="https://i2.wp.com/blog.bridgemanimages.com/wp-content/uploads/2017/01/death-life-gustav-klimt.jpg?fit=805%2C340" >
 
     <div id="profile">
       <h1 id="name"></h1>
       <ul id="paintings">
       </ul>
     </div>
-
-
-
-
-
-    <script type="text/javascript" src="index.js">
-
-    </script>
+  </center>
+    <script type="text/javascript" src="index.js"></script>
   </body>
 </html>
