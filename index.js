@@ -1,8 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const url = "http://localhost:3000/users"
+
+  // ********* DOM ELEMENTS ********** //
   const signInForm = document.getElementById('signInForm')
   const signUpForm = document.getElementById("signUpForm")
+  const signUpButton = document.querySelector("#signUpButton")
+  const signInButton = document.querySelector("#signInButton")
+  const signUpModal = document.querySelector("#signUpModal")
+  const signInModal = document.querySelector("#signInModal")
+  const signUpClose = document.querySelector("#signUpClose")
+  const signInClose = document.querySelector("#signInClose")
+
+  signUpButton.addEventListener("click", (e) => {
+    signUpModal.style.display = "block"
+  })
+
+  signInButton.addEventListener("click", (e) => {
+    signInModal.style.display = "block"
+  })
+
+  signUpClose.onclick = function() {
+    signUpModal.style.display = "none"
+  }
+
+  signInClose.onclick = function() {
+    signInModal.style.display = "none"
+  }
+
+  window.onclick = function(event) {
+    if (event.target == signInModal) {
+      signInModal.style.display = "none"
+    }
+    if (event.target == signUpModal) {
+        signUpModal.style.display = "none"
+    }
+  }
 
   signUpForm.addEventListener("submit", (e) => {
     e.preventDefault()
@@ -12,12 +45,14 @@ document.addEventListener("DOMContentLoaded", () => {
       name: nameInput
     }
     postUser(newInfo)
+    signUpForm.name.value = ""
   })
 
   signInForm.addEventListener("submit", (e) => {
     e.preventDefault()
     let nameInput = e.target.name.value
     handleSignIn(nameInput)
+    signInForm.name.value = ""
   })
 
   function postUser(body){
