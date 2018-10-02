@@ -1,13 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-
   const url = "http://localhost:3000/users"
-  const signIn = document.getElementById('sign-in')
-  const signUp = document.getElementById("signUpForm")
+  const signInForm = document.getElementById('signInForm')
+  const signUpForm = document.getElementById("signUpForm")
 
-
-
-  signUp.addEventListener("submit", (e) => {
+  signUpForm.addEventListener("submit", (e) => {
     e.preventDefault()
     let nameInput = e.target.name.value
 
@@ -17,15 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
     postUser(newInfo)
   })
 
-  signIn.addEventListener("submit", (e) => {
+  signInForm.addEventListener("submit", (e) => {
     e.preventDefault()
     let nameInput = e.target.name.value
-    getUser(nameInput)
+    handleSignIn(nameInput)
   })
 
-
-
-    function postUser(body){
+  function postUser(body){
     fetch(url, {
       method: "POST",
       headers: {
@@ -33,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       body: JSON.stringify(body)
     }).then(res => res.json())
-    .then(res => renderProfile(res))
+    .then(console.log)
     //************** NEED TO FIGURE OUT HOW TO FIELD AN ERROR********************//
     // .catch(function(){
     //   debugger
@@ -41,27 +36,31 @@ document.addEventListener("DOMContentLoaded", () => {
     // })
   }
 
-  function renderProfile(user){
-    signIn.style.display = "none"
-    debugger
-    let userName = document.getElementById("name")
-    userName.innerText = user.name
-
-    if (user.paintings){
-      user.paintings.forEach(painting => (){
-        painting
+  function handleSignIn(nameInput) {
+    fetch(url)
+    .then(resp => resp.json())
+    .then(userArray => {
+      return userArray.forEach(user => {
+        if(user.name === nameInput) {
+          console.log(user)
+        }
       })
-    }
-
+    })
   }
 
 
-
-
-
-
-
-
-
+  // function renderProfile(user){
+  //   signIn.style.display = "none"
+  //   debugger
+  //   let userName = document.getElementById("name")
+  //   userName.innerText = user.name
+  //
+  //   // if (user.paintings){
+  //   //   user.paintings.forEach(painting => (){
+  //   //     painting
+  //   //   })
+  //   }
+  //
+  // }
 
 })
