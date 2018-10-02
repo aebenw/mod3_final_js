@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-
   const url = "http://localhost:3000/users"
+
+  const welcomeDiv = document.getElementById("signup-form")
   const signIn = document.getElementById('sign-in')
   const signUp = document.getElementById("signUpForm")
 
@@ -24,6 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
 
+  function getUser(name){
+    fetch(url+ `/${name}`)
+    .then(res => res.json())
+    .then(res => console.log(res))
+  }
+
 
     function postUser(body){
     fetch(url, {
@@ -32,8 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(body)
-    }).then(res => res.json())
-    .then(res => renderProfile(res))
+      }).then(res => res.json())
+      .then(res => renderProfile(res))
     //************** NEED TO FIGURE OUT HOW TO FIELD AN ERROR********************//
     // .catch(function(){
     //   debugger
@@ -41,19 +48,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // })
   }
 
-  function renderProfile(user){
-    signIn.style.display = "none"
-    debugger
-    let userName = document.getElementById("name")
-    userName.innerText = user.name
-
-    if (user.paintings){
-      user.paintings.forEach(painting => (){
-        painting
-      })
-    }
-
-  }
+  // function renderProfile(user){
+  //   signIn.style.display = "none"
+  //   debugger
+  //   let userName = document.getElementById("name")
+  //   userName.innerText = user.name
+  //
+  //   if (user.paintings){
+  //     user.paintings.forEach(painting => (){
+  //       painting
+  //     })
+  //   }
+  //
+  // }
 
 
 
