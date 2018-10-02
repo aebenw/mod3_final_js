@@ -3,12 +3,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const url = "http://localhost:3000/users"
 
   const welcomeDiv = document.getElementById("signup-form")
-  const signIn = document.getElementById('sign-in')
-  const signUp = document.getElementById("signUpForm")
+  const signInForm = document.getElementById('signInForm')
+  const signUpForm = document.getElementById("signUpForm")
+  const signUpButton = document.querySelector("#signUpButton")
+  const signInButton = document.querySelector("#signInButton")
+  const signUpModal = document.querySelector("#signUpModal")
+  const signInModal = document.querySelector("#signInModal")
+  const signUpClose = document.querySelector("#signUpClose")
+  const signInClose = document.querySelector("#signInClose")
 
+  signUpButton.addEventListener("click", (e) => {
+    signUpModal.style.display = "block"
+  })
 
+  signInButton.addEventListener("click", (e) => {
+    signInModal.style.display = "block"
+  })
 
-  signUp.addEventListener("submit", (e) => {
+  signUpClose.onclick = function() {
+    signUpModal.style.display = "none"
+  }
+
+  signInClose.onclick = function() {
+    signInModal.style.display = "none"
+  }
+
+  window.onclick = function(event) {
+    if (event.target == signInModal) {
+      signInModal.style.display = "none"
+    }
+    if (event.target == signUpModal) {
+        signUpModal.style.display = "none"
+    }
+  }
+
+  signUpForm.addEventListener("submit", (e) => {
     e.preventDefault()
     let nameInput = e.target.name.value
 
@@ -18,17 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
     postUser(newInfo)
   })
 
-  signIn.addEventListener("submit", (e) => {
+  signInForm.addEventListener("submit", (e) => {
     e.preventDefault()
     let nameInput = e.target.name.value
     getUser(nameInput)
+    signInForm.name.value = ""
   })
 
 
   function getUser(name){
-    // if (name.includes(" ")){
-    //    name = name.split(' ').join('+')
-    //  }
     fetch(url+ `/${name}`)
     .then(res => res.json())
     .then(res => renderProfile(res))
