@@ -26,9 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function getUser(name){
+    // if (name.includes(" ")){
+    //    name = name.split(' ').join('+')
+    //  }
     fetch(url+ `/${name}`)
     .then(res => res.json())
-    .then(res => console.log(res))
+    .then(res => renderProfile(res))
   }
 
 
@@ -48,19 +51,33 @@ document.addEventListener("DOMContentLoaded", () => {
     // })
   }
 
-  // function renderProfile(user){
-  //   signIn.style.display = "none"
-  //   debugger
-  //   let userName = document.getElementById("name")
-  //   userName.innerText = user.name
-  //
-  //   if (user.paintings){
-  //     user.paintings.forEach(painting => (){
-  //       painting
-  //     })
-  //   }
-  //
-  // }
+  function renderProfile(user){
+    welcomeDiv.style.display = "none"
+    const paintingUl = document.getElementById('paintings-ul')
+    debugger
+    let userName = document.getElementById("name")
+    userName.innerText = `Welcome ${user.name}`
+debugger
+    if (user.paintings){
+      user.paintings.forEach(painting => {
+        debugger
+      let paintingLi = document.createElement('li')
+      let paintingImg = document.createElement('img')
+      let title = document.createElement('h1')
+      let artist = document.createElement('h2')
+
+      paintingImg.src = painting.img_url
+      title.innerText = painting.name
+      artist.innerText = painting.artist
+
+      paintingLi.append(paintingImg)
+      paintingLi.append(title)
+      paintingLi.append(artist)
+      paintingUl.append(paintingLi)
+      })
+    }
+
+  }
 
 
 
