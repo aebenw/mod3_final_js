@@ -102,22 +102,45 @@ debugger
       paintingLi.append(artist)
       paintingUl.append(paintingLi)
       })
-    })
+    }
+
   }
 
 
-  // function renderProfile(user){
-  //   signIn.style.display = "none"
-  //   debugger
-  //   let userName = document.getElementById("name")
-  //   userName.innerText = user.name
-  //
-  //   // if (user.paintings){
-  //   //   user.paintings.forEach(painting => (){
-  //   //     painting
-  //   //   })
-  //   }
-  //
-  // }
 
+
+
+function getAllPaintings(){
+  fetch("http://localhost:3000/paintings/?_limit=20")
+  .then(res => res.json())
+  .then(renderAllPaintings)
+}
+getAllPaintings()
+
+
+function renderAllPaintings(data){
+  const allPaintings = document.getElementById("allPaintingsUl")
+
+  data.forEach(painting => {
+  let paintingLi = document.createElement('li')
+  let paintingImg = document.createElement('img')
+  let title = document.createElement('h1')
+  let artist = document.createElement('h2')
+
+
+  paintingImg.src = painting.img_url
+  title.innerText = painting.name
+  artist.innerText = painting.artist
+// debugger
+  paintingLi.append(paintingImg)
+  paintingLi.append(title)
+  paintingLi.append(artist)
+  // debugger
+  allPaintings.append(paintingLi)
+})
+let images = document.querySelectorAll("img[src='null']")
+debugger
+images.forEach(img => img.remove())
+
+  }
 })
