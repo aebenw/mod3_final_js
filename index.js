@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const welcomeDiv = document.getElementById("welcome")
   const profileDiv = document.getElementById("profile")
+  const allPaintingDiv = document.getElementById("allPaintings")
+
   const signInForm = document.getElementById('signInForm')
   const signUpForm = document.getElementById("signUpForm")
   const signUpButton = document.querySelector("#signUpButton")
@@ -12,6 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const signInModal = document.querySelector("#signInModal")
   const signUpClose = document.querySelector("#signUpClose")
   const signInClose = document.querySelector("#signInClose")
+
+  const homeBtn = document.getElementById("homeBtn")
+  const allBtn = document.getElementById("allBtn")
+  const navbar = document.getElementById("navbar")
 
   signUpButton.addEventListener("click", (e) => {
     signUpModal.style.display = "block"
@@ -37,6 +43,22 @@ document.addEventListener("DOMContentLoaded", () => {
         signUpModal.style.display = "none"
     }
   }
+
+  homeBtn.addEventListener('click', function(e){
+    e.preventDefault
+    if (profileDiv.style.display === "none"){
+      profile.style.display = "block"
+      allPaintingDiv.style.display = "none"
+    }
+  })
+
+  allBtn.addEventListener('click', function(e){
+    e.preventDefault
+    if (allPaintingDiv.style.display === "none"){
+      allPaintingDiv.style.display = "block"
+      profileDiv.style.display = "none"
+    }
+  })
 
   signUpForm.addEventListener("submit", (e) => {
     e.preventDefault()
@@ -80,7 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderProfile(user){
+    debugger
     welcomeDiv.style.display = "none"
+    navbar.style.display = "block"
     profileDiv.style.display = "block"
     profileDiv.dataset.user = user.id
     const paintingUl = document.getElementById('paintings-ul')
@@ -91,26 +115,51 @@ document.addEventListener("DOMContentLoaded", () => {
     if (user.paintings){
       user.paintings.forEach(painting => {
 
-      let paintingLi = document.createElement('li')
-      let paintingImg = document.createElement('img')
-      let title = document.createElement('h1')
-      let artist = document.createElement('h2')
 
-      paintingImg.src = painting.img_url
-      title.innerText = painting.name
-      artist.innerText = painting.artist
+        let paintingCard = document.createElement('div')
+        paintingCard.setAttribute("class", "card")
+        paintingCard.setAttribute("style", "width: 18rem;")
 
-      paintingLi.append(paintingImg)
-      paintingLi.append(title)
-      paintingLi.append(artist)
-      paintingUl.append(paintingLi)
+        let paintingImg = document.createElement('img')
+
+        let paintingInfoDiv = document.createElement('div')
+        paintingInfoDiv.setAttribute("class", "card-body")
+
+        let title = document.createElement('h4')
+        title.setAttribute("class", "card-title")
+
+        let artist = document.createElement('h5')
+        artist.setAttribute("class", "card-text")
+
+        let paintingBtn = document.createElement('a')
+        paintingBtn.setAttribute("class", "btn btn-primary" )
+
+        paintingImg.setAttribute("class", "card-img-top")
+        paintingImg.src = painting.img_url
+        paintingImg.style.width ="300"
+        paintingImg.style.height ="400"
+        title.innerText = painting.name
+        artist.innerText = painting.artist
+
+        paintingBtn.innerText = "Delete From your Profile"
+
+        paintingBtn.setAttribute("name", painting.id)
+        paintingBtn.addEventListener('click', addToProfile)
+
+
+        paintingInfoDiv.append(title)
+        paintingInfoDiv.append(paintingBtn)
+        paintingInfoDiv.append(artist)
+        paintingCard.append(paintingInfoDiv)
+        paintingCard.append(paintingImg)
+
+        profileDiv.append(paintingCard)
       })
-    }
-
+    } else {
+      let noPaintings = document.createElement("h3")
+      noPaintings.innerText = "No paintings, with your profile"
+      }
   }
-
-
-
 
 
 function getAllPaintings(){
@@ -125,12 +174,26 @@ function renderAllPaintings(data){
   const allPaintings = document.getElementById("allPaintingsUl")
 
   data.forEach(painting => {
-  let paintingLi = document.createElement('li')
-  let paintingImg = document.createElement('img')
-  let title = document.createElement('h1')
-  let artist = document.createElement('h2')
-  let paintingBtn = document.createElement('button')
 
+  let paintingCard = document.createElement('div')
+  paintingCard.setAttribute("class", "card")
+  paintingCard.setAttribute("style", "width: 18rem;")
+
+  let paintingImg = document.createElement('img')
+
+  let paintingInfoDiv = document.createElement('div')
+  paintingInfoDiv.setAttribute("class", "card-body")
+
+  let title = document.createElement('h4')
+  title.setAttribute("class", "card-title")
+
+  let artist = document.createElement('h5')
+  artist.setAttribute("class", "card-text")
+
+  let paintingBtn = document.createElement('a')
+  paintingBtn.setAttribute("class", "btn btn-primary" )
+
+  paintingImg.setAttribute("class", "card-img-top")
   paintingImg.src = painting.img_url
   paintingImg.style.width ="300"
   paintingImg.style.height ="400"
@@ -142,11 +205,14 @@ function renderAllPaintings(data){
   paintingBtn.setAttribute("name", painting.id)
   paintingBtn.addEventListener('click', addToProfile)
 
-  paintingLi.append(paintingBtn)
-  paintingLi.append(paintingImg)
-  paintingLi.append(title)
-  paintingLi.append(artist)
-  allPaintings.append(paintingLi)
+
+  paintingInfoDiv.append(title)
+  paintingInfoDiv.append(paintingBtn)
+  paintingInfoDiv.append(artist)
+  paintingCard.append(paintingInfoDiv)
+  paintingCard.append(paintingImg)
+
+  allPaintings.append(paintingCard)
 })
 let images = document.querySelectorAll("img[src='null']")
 // debugger
