@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const url = "http://localhost:3000/users"
+  const url = "http://localhost:3000"
 
-  const welcomeDiv = document.getElementById("signup-form")
+  const welcomeDiv = document.getElementById("welcome")
+  const profileDiv = document.getElementById("profile")
   const signInForm = document.getElementById('signInForm')
   const signUpForm = document.getElementById("signUpForm")
   const signUpButton = document.querySelector("#signUpButton")
@@ -56,14 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function getUser(name){
-    fetch(url+ `/${name}`)
+    fetch(url+ `/users/${name}`)
     .then(res => res.json())
     .then(res => renderProfile(res))
   }
 
 
     function postUser(body){
-    fetch(url, {
+    fetch(url + '/users', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -80,14 +81,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderProfile(user){
     welcomeDiv.style.display = "none"
+    profileDiv.style.display = "block"
+    profileDiv.dataset.user = user.id
     const paintingUl = document.getElementById('paintings-ul')
-    debugger
+
     let userName = document.getElementById("name")
     userName.innerText = `Welcome ${user.name}`
-debugger
+
     if (user.paintings){
       user.paintings.forEach(painting => {
-        debugger
+
       let paintingLi = document.createElement('li')
       let paintingImg = document.createElement('img')
       let title = document.createElement('h1')
@@ -111,7 +114,7 @@ debugger
 
 
 function getAllPaintings(){
-  fetch("http://localhost:3000/paintings/?_limit=20")
+  fetch(url + "/paintings/?_limit=20")
   .then(res => res.json())
   .then(renderAllPaintings)
 }
@@ -126,21 +129,58 @@ function renderAllPaintings(data){
   let paintingImg = document.createElement('img')
   let title = document.createElement('h1')
   let artist = document.createElement('h2')
-
+  let paintingBtn = document.createElement('button')
 
   paintingImg.src = painting.img_url
+  paintingImg.style.width ="300"
+  paintingImg.style.height ="400"
   title.innerText = painting.name
   artist.innerText = painting.artist
-// debugger
+
+  paintingBtn.innerText = "Add Painting to your Profile"
+
+  paintingBtn.setAttribute("name", painting.id)
+  paintingBtn.addEventListener('click', addToProfile)
+
+  paintingLi.append(paintingBtn)
   paintingLi.append(paintingImg)
   paintingLi.append(title)
   paintingLi.append(artist)
-  // debugger
   allPaintings.append(paintingLi)
 })
 let images = document.querySelectorAll("img[src='null']")
-debugger
+// debugger
 images.forEach(img => img.remove())
 
   }
+
+function addToProfile(e){
+
+  let paintingId = e.target.name
+  let userId = profileDiv.dataset.user
+
+  body = {
+	"user_id": `${paintingId}`,
+	"painting_id": `${userId}`
+  }
+  debugger
+  makeUserPainting(body)
+
+}
+
+function makeUserPainting(body){
+  debugger
+  fetch(url + "/user_paintings", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  }).then(res => res.json())
+    .then(console.log)
+
+}
+
+
+
 })
