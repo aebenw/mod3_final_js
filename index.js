@@ -289,12 +289,12 @@ function renderGallery(){
 
 //   var sourcePoints = [[0, 0], [width, 0], [width, height], [0, height]],
 //       targetPoints = [[0, 0], [width, 0], [width, height], [0, height]];
-// debugger
-//   d3.selectAll("svg")
-//   .append("g")
-//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+debugger
+  d3.selectAll("svg")
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-
+debugger
   svgTransform.select("g").append("image")
     .attr("xlink:href", `${event.target.name}`)
     .attr("width", width)
