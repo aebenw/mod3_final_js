@@ -238,17 +238,16 @@ images.forEach(img => img.remove())
 function addToProfile(e){
 //---------------optomistic rendering-------------------//
   e.preventDefault()
+  //------------ Create Matrix Btn -------------//
   let imageLink = e.target.parentElement.parentElement.parentElement.querySelector('img').src
-
   let galleryBtn = document.createElement('a')
   galleryBtn.setAttribute("class", "btn btn-primary" )
   galleryBtn.setAttribute("name", imageLink)
   galleryBtn.innerText = "Test in Gallery"
   galleryBtn.addEventListener('click', renderGallery)
   e.target.parentElement.append(galleryBtn)
-
+  //--------------------------------------------//
   e.target.innerText = "Delete"
-
   let newPainting = e.target.parentElement.parentElement.parentElement;
   profileDiv.append(newPainting)
 
