@@ -102,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderProfile(user){
-    debugger
     welcomeDiv.style.display = "none"
     navbar.style.display = "block"
     profileDiv.style.display = "block"
@@ -115,13 +114,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (user.paintings){
       user.paintings.forEach(painting => {
 
-
+//PARENT ELEMENT//
         let paintingCard = document.createElement('div')
         paintingCard.setAttribute("class", "card")
         paintingCard.setAttribute("style", "width: 18rem;")
-
+//PAINTING IMG//
         let paintingImg = document.createElement('img')
-
+//DIV FOR NAME/ARTIST//
         let paintingInfoDiv = document.createElement('div')
         paintingInfoDiv.setAttribute("class", "card-body")
 
@@ -130,25 +129,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let artist = document.createElement('h5')
         artist.setAttribute("class", "card-text")
-
+//DELETE/MATRIX BTNS//
         let paintingBtn = document.createElement('a')
         paintingBtn.setAttribute("class", "btn btn-primary" )
+        let galleryBtn = document.createElement('a')
+        galleryBtn.setAttribute("class", "btn btn-primary" )
 
         paintingImg.setAttribute("class", "card-img-top")
         paintingImg.src = painting.img_url
-        paintingImg.style.width ="300"
-        paintingImg.style.height ="400"
+        paintingImg.name = "image"
         title.innerText = painting.name
         artist.innerText = painting.artist
 
-        paintingBtn.innerText = "Delete From your Profile"
+        let buttonDiv = document.createElement('div')
 
         paintingBtn.setAttribute("name", painting.id)
+        paintingBtn.innerText = "Delete"
         paintingBtn.addEventListener('click', addToProfile)
+
+        galleryBtn.setAttribute("name", painting.img_url)
+        galleryBtn.innerText = "Test in Gallery"
+        galleryBtn.addEventListener('click', renderGallery)
+
+
+        buttonDiv.append(galleryBtn)
+        buttonDiv.append(paintingBtn)
 
 
         paintingInfoDiv.append(title)
-        paintingInfoDiv.append(paintingBtn)
+        paintingInfoDiv.append(buttonDiv)
+        // paintingInfoDiv.append(galleryBtn)
         paintingInfoDiv.append(artist)
         paintingCard.append(paintingInfoDiv)
         paintingCard.append(paintingImg)
@@ -171,7 +181,7 @@ getAllPaintings()
 
 
 function renderAllPaintings(data){
-  const allPaintings = document.getElementById("allPaintingsUl")
+  const allPaintings = document.getElementById("allPaintings")
 
   data.forEach(painting => {
 
@@ -190,24 +200,29 @@ function renderAllPaintings(data){
   let artist = document.createElement('h5')
   artist.setAttribute("class", "card-text")
 
+  let btnDiv = document.createElement('div')
   let paintingBtn = document.createElement('a')
   paintingBtn.setAttribute("class", "btn btn-primary" )
 
+
+
   paintingImg.setAttribute("class", "card-img-top")
   paintingImg.src = painting.img_url
+  paintingImg.name = "image"
+
   paintingImg.style.width ="300"
   paintingImg.style.height ="400"
   title.innerText = painting.name
   artist.innerText = painting.artist
 
   paintingBtn.innerText = "Add Painting to your Profile"
-
   paintingBtn.setAttribute("name", painting.id)
   paintingBtn.addEventListener('click', addToProfile)
+  btnDiv.append(paintingBtn)
 
 
   paintingInfoDiv.append(title)
-  paintingInfoDiv.append(paintingBtn)
+  paintingInfoDiv.append(btnDiv)
   paintingInfoDiv.append(artist)
   paintingCard.append(paintingInfoDiv)
   paintingCard.append(paintingImg)
@@ -221,21 +236,36 @@ images.forEach(img => img.remove())
   }
 
 function addToProfile(e){
+//---------------optomistic rendering-------------------//
+  e.preventDefault()
+  let imageLink = e.target.parentElement.parentElement.parentElement.querySelector('img').src
+
+  let galleryBtn = document.createElement('a')
+  galleryBtn.setAttribute("class", "btn btn-primary" )
+  galleryBtn.setAttribute("name", imageLink)
+  galleryBtn.innerText = "Test in Gallery"
+  galleryBtn.addEventListener('click', renderGallery)
+  e.target.parentElement.append(galleryBtn)
+
+  e.target.innerText = "Delete"
+
+  let newPainting = e.target.parentElement.parentElement.parentElement;
+  profileDiv.append(newPainting)
+
+//------------ upload to db -----------------//
 
   let paintingId = e.target.name
   let userId = profileDiv.dataset.user
 
   body = {
-	"user_id": `${paintingId}`,
-	"painting_id": `${userId}`
+	"user_id": `${userId}`,
+	"painting_id": `${paintingId}`
   }
-  debugger
   makeUserPainting(body)
 
 }
 
 function makeUserPainting(body){
-  debugger
   fetch(url + "/user_paintings", {
     method: "POST",
     headers: {
@@ -247,6 +277,31 @@ function makeUserPainting(body){
 
 }
 
+function renderGallery(){
 
+  svgTransform.select("g").append("image")
+    .attr("xlink:href", `${event.target.name}`)
+    .attr("width", width)
+    .attr("height", height);
+
+svgTransform.select("g").selectAll(".line--x")
+    .data(d3.range(0, width + 1, 40))
+  .enter().append("line")
+    .attr("class", "line line--x")
+    .attr("x1", function(d) { return d; })
+    .attr("x2", function(d) { return d; })
+    .attr("y1", 0)
+    .attr("y2", height);
+
+svgTransform.select("g").selectAll(".line--y")
+    .data(d3.range(0, height + 1, 40))
+  .enter().append("line")
+    .attr("class", "line line--y")
+    .attr("x1", 0)
+    .attr("x2", width)
+    .attr("y1", function(d) { return d; })
+    .attr("y2", function(d) { return d; });
+
+}
 
 })

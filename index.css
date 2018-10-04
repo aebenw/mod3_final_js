@@ -36,6 +36,18 @@
     cursor: pointer;
 }
 
+#imgMatrix {
+  position: relative;
+  width: 960px;
+  height: 500px;
+  margin: 40px;
+}
+
+#background {
+  width: 960px;
+  height: 500px;
+  background: url(http://images.artistrunwebsite.com/arwblog/bg_20231416365188.jpg?1416365188);
+}
 
 svg {
   position: absolute;
