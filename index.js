@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const allBtn = document.getElementById("allBtn")
   const navbar = document.getElementById("navbar")
 
+  let matrixPics = [];
+
   signUpButton.addEventListener("click", (e) => {
     signUpModal.style.display = "block"
   })
@@ -110,8 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let userName = document.getElementById("name")
     userName.innerText = `Welcome ${user.name}`
-
-    if (user.paintings){
+    if (user.paintings.length !== 0){
       user.paintings.forEach(painting => {
 
 //PARENT ELEMENT//
@@ -162,13 +163,20 @@ document.addEventListener("DOMContentLoaded", () => {
         paintingInfoDiv.append(artist)
         paintingCard.append(paintingInfoDiv)
         paintingCard.append(paintingImg)
+        paintingCard.setAttribute("name", painting.id)
 
         profileDiv.append(paintingCard)
+
+
       })
     } else {
       let noPaintings = document.createElement("h3")
-      noPaintings.innerText = "No paintings, with your profile"
+      noPaintings.innerText = "Choose Some Paintings you Fancy"
+      profileDiv.append(noPaintings)
+
       }
+      removeUserPaintings()
+
   }
 
 
@@ -226,6 +234,7 @@ function renderAllPaintings(data){
   paintingInfoDiv.append(artist)
   paintingCard.append(paintingInfoDiv)
   paintingCard.append(paintingImg)
+  paintingCard.setAttribute("name", painting.id)
 
   allPaintings.append(paintingCard)
 })
@@ -278,6 +287,14 @@ function makeUserPainting(body){
 
 function renderGallery(){
 
+//   var sourcePoints = [[0, 0], [width, 0], [width, height], [0, height]],
+//       targetPoints = [[0, 0], [width, 0], [width, height], [0, height]];
+// debugger
+//   d3.selectAll("svg")
+//   .append("g")
+//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
   svgTransform.select("g").append("image")
     .attr("xlink:href", `${event.target.name}`)
     .attr("width", width)
@@ -301,6 +318,37 @@ svgTransform.select("g").selectAll(".line--y")
     .attr("y1", function(d) { return d; })
     .attr("y2", function(d) { return d; });
 
+// var handle = svgFlat.select("g").selectAll(".handle")
+//         .data(targetPoints)
+//       .enter().append("circle")
+//         .attr("class", "handle")
+//         .attr("transform", function(d) { return "translate(" + d + ")"; })
+//         .attr("r", 7)
+//         .call(d3.behavior.drag()
+//           .origin(function(d) { return {x: d[0], y: d[1]}; })
+//           .on("drag", dragged));
+
 }
+
+
+function removeUserPaintings() {
+
+
+
+
+  let userPaintings =  Array.from(profileDiv.querySelectorAll(".card"))
+  let profPaintingId = userPaintings.map(p => p.attributes.name.value);
+  let allArr = allPaintingDiv.querySelectorAll(".card")
+
+  allArr.forEach(function(p){
+  	if (profPaintingId.includes(p.attributes.name.value)){
+      p.remove()
+    }
+  })
+
+
+}
+
+
 
 })

@@ -59,8 +59,7 @@
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~Profile~~~~~~~~~~~~~~~~~~~~~~~ -->
     <div id="profile" style="display:none">
       <h1 id="name"></h1>
-      <ul id="paintings-ul">
-      </ul>
+
     </div>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~All Paintings~~~~~~~~~~~~~~~~~~~~~ -->
@@ -99,7 +98,7 @@ d3.select(imgMatrix).selectAll("svg")
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-//possible to d3.select(imgMatrix in a function and append however many images)
+
 var svgTransform = d3.select("#transform")
     .style(transform + "-origin", margin.left + "px " + margin.top + "px 0");
 
