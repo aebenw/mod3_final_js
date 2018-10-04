@@ -36,6 +36,22 @@
     cursor: pointer;
 }
 
+#name {
+  text-transform: capitalize;   
+}
+
+#imgMatrix {
+  position: relative;
+  width: 960px;
+  height: 500px;
+  margin: 40px;
+}
+
+#background {
+  width: 960px;
+  height: 500px;
+  background: url(https://simplisticallyraw.files.wordpress.com/2017/01/hja1uhg7b3ziilj4qie-g-wide.jpg);
+}
 
 svg {
   position: absolute;

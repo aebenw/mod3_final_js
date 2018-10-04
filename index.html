@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="index.css" />
     <meta charset="utf-8">
     <title>Kunst</title>
   </head>
@@ -58,52 +59,38 @@
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~Profile~~~~~~~~~~~~~~~~~~~~~~~ -->
     <div id="profile" style="display:none">
       <h1 id="name"></h1>
-      <ul id="paintings-ul">
-      </ul>
+
     </div>
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~All Paintings~~~~~~~~~~~~~~~~~~~~~ -->
     <div id="allPaintings" style="display:none;">
-      <ul id="allPaintingsUl">
-      </ul>
     </div>
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~Image Matrix~~~~~~~~~~~~~~~~~~~~~~~ -->
-<style>
-
-body {
-  position: relative;
-  width: 960px;
-  height: 500px;
-}
-
-#background {
-  width: 960px;
-  height: 500px;
-  background: url(http://images.artistrunwebsite.com/arwblog/bg_20231416365188.jpg?1416365188);
-}
-
-</style>
+<div id="imgMatrix">
 <div id="background"></div>
 <div id="buttons">
-  <button data-targets="[[492,329],[542,330],[569,434],[424,424]]">Floor</button>
-  <button data-targets="[[-28,287],[74,288],[72,413],[-31,404]]">Near Wall</button>
-  <button data-targets="[[-194,282],[-95,282],[-100,354],[-200,365]]">Far Wall</button>
-  <button data-targets="[[0,0],[400,0],[400,400],[0,400]]">Reset</button>
+  <button class="imgManipulator" data-targets="[[492,329],[542,330],[569,434],[424,424]]">Floor</button>
+  <button class="imgManipulator" data-targets="[[-28,287],[74,288],[72,413],[-31,404]]">Near Wall</button>
+  <button class="imgManipulator" data-targets="[[-194,282],[-95,282],[-100,354],[-200,365]]">Far Wall</button>
+  <button class="imgManipulator" data-targets="[[0,0],[400,0],[400,400],[0,400]]">Reset</button>
+</div>
+</div>
 </div>
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="numeric-solve.min.js"></script>
 <script>
-var body = document.querySelector("body")
+var imgMatrix = document.getElementById("imgMatrix")
 var margin = {top: 50, right: 280, bottom: 50, left: 280},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var transform = ["", "-webkit-", "-moz-", "-ms-", "-o-"].reduce(function(p, v) { return v + "transform" in document.body.style ? v : p; }) + "transform";
+var transform = ["", "-webkit-", "-moz-", "-ms-", "-o-"].reduce(function(p, v) {
+  return v + "transform" in document.body.style ? v : p; }) + "transform";
 
 var sourcePoints = [[0, 0], [width, 0], [width, height], [0, height]],
     targetPoints = [[0, 0], [width, 0], [width, height], [0, height]];
 
-d3.select("body").selectAll("svg")
+d3.select(imgMatrix).selectAll("svg")
     .data(["transform", "flat"])
   .enter().append("svg")
     .attr("id", function(d) { return d; })
@@ -117,28 +104,28 @@ var svgTransform = d3.select("#transform")
 
 var svgFlat = d3.select("#flat");
 
-svgTransform.select("g").append("image")
-    .attr("xlink:href", "https://images-na.ssl-images-amazon.com/images/I/41HTspbi-uL.jpg")
-    .attr("width", width)
-    .attr("height", height);
-
-svgTransform.select("g").selectAll(".line--x")
-    .data(d3.range(0, width + 1, 40))
-  .enter().append("line")
-    .attr("class", "line line--x")
-    .attr("x1", function(d) { return d; })
-    .attr("x2", function(d) { return d; })
-    .attr("y1", 0)
-    .attr("y2", height);
-
-svgTransform.select("g").selectAll(".line--y")
-    .data(d3.range(0, height + 1, 40))
-  .enter().append("line")
-    .attr("class", "line line--y")
-    .attr("x1", 0)
-    .attr("x2", width)
-    .attr("y1", function(d) { return d; })
-    .attr("y2", function(d) { return d; });
+// svgTransform.select("g").append("image")
+//     .attr("xlink:href", "https://images-na.ssl-images-amazon.com/images/I/41HTspbi-uL.jpg")
+//     .attr("width", width)
+//     .attr("height", height);
+//
+// svgTransform.select("g").selectAll(".line--x")
+//     .data(d3.range(0, width + 1, 40))
+//   .enter().append("line")
+//     .attr("class", "line line--x")
+//     .attr("x1", function(d) { return d; })
+//     .attr("x2", function(d) { return d; })
+//     .attr("y1", 0)
+//     .attr("y2", height);
+//
+// svgTransform.select("g").selectAll(".line--y")
+//     .data(d3.range(0, height + 1, 40))
+//   .enter().append("line")
+//     .attr("class", "line line--y")
+//     .attr("x1", 0)
+//     .attr("x2", width)
+//     .attr("y1", function(d) { return d; })
+//     .attr("y2", function(d) { return d; });
 
 var handle = svgFlat.select("g").selectAll(".handle")
     .data(targetPoints)
@@ -150,7 +137,7 @@ var handle = svgFlat.select("g").selectAll(".handle")
       .origin(function(d) { return {x: d[0], y: d[1]}; })
       .on("drag", dragged));
 
-d3.selectAll("button")
+d3.selectAll(".imgManipulator")
     .datum(function(d) { return JSON.parse(this.getAttribute("data-targets")); })
     .on("click", clicked)
     .call(transformed);
