@@ -79,30 +79,30 @@
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="numeric-solve.min.js"></script>
 <script>
-var imgMatrix = document.getElementById("imgMatrix")
-var margin = {top: 50, right: 280, bottom: 50, left: 280},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-var transform = ["", "-webkit-", "-moz-", "-ms-", "-o-"].reduce(function(p, v) {
-  return v + "transform" in document.body.style ? v : p; }) + "transform";
-
-var sourcePoints = [[0, 0], [width, 0], [width, height], [0, height]],
-    targetPoints = [[0, 0], [width, 0], [width, height], [0, height]];
-
-d3.select(imgMatrix).selectAll("svg")
-    .data(["transform", "flat"])
-  .enter().append("svg")
-    .attr("id", function(d) { return d; })
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-var svgTransform = d3.select("#transform")
-    .style(transform + "-origin", margin.left + "px " + margin.top + "px 0");
-
-var svgFlat = d3.select("#flat");
+// var imgMatrix = document.getElementById("imgMatrix")
+// var margin = {top: 50, right: 280, bottom: 50, left: 280},
+//     width = 960 - margin.left - margin.right,
+//     height = 500 - margin.top - margin.bottom;
+//
+// var transform = ["", "-webkit-", "-moz-", "-ms-", "-o-"].reduce(function(p, v) {
+//   return v + "transform" in document.body.style ? v : p; }) + "transform";
+//
+// var sourcePoints = [[0, 0], [width, 0], [width, height], [0, height]],
+//     targetPoints = [[0, 0], [width, 0], [width, height], [0, height]];
+//
+// d3.select(imgMatrix).selectAll("svg")
+//     .data(["transform", "flat"])
+//   .enter().append("svg")
+//     .attr("id", function(d) { return d; })
+//     .attr("width", width + margin.left + margin.right)
+//     .attr("height", height + margin.top + margin.bottom)
+//   .append("g")
+//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+//
+// var svgTransform = d3.select("#transform")
+//     .style(transform + "-origin", margin.left + "px " + margin.top + "px 0");
+//
+// var svgFlat = d3.select("#flat");
 
 // svgTransform.select("g").append("image")
 //     .attr("xlink:href", "https://images-na.ssl-images-amazon.com/images/I/41HTspbi-uL.jpg")
@@ -127,38 +127,38 @@ var svgFlat = d3.select("#flat");
 //     .attr("y1", function(d) { return d; })
 //     .attr("y2", function(d) { return d; });
 
-var handle = svgFlat.select("g").selectAll(".handle")
-    .data(targetPoints)
-  .enter().append("circle")
-    .attr("class", "handle")
-    .attr("transform", function(d) { return "translate(" + d + ")"; })
-    .attr("r", 7)
-    .call(d3.behavior.drag()
-      .origin(function(d) { return {x: d[0], y: d[1]}; })
-      .on("drag", dragged));
-
-d3.selectAll(".imgManipulator")
-    .datum(function(d) { return JSON.parse(this.getAttribute("data-targets")); })
-    .on("click", clicked)
-    .call(transformed);
-
-function clicked(d) {
-  d3.transition()
-      .duration(750)
-      .tween("points", function() {
-        var i = d3.interpolate(targetPoints, d);
-        return function(t) {
-          handle.data(targetPoints = i(t)).attr("transform", function(d) { return "translate(" + d + ")"; });
-          transformed();
-        };
-      });
-}
-
+// var handle = svgFlat.select("g").selectAll(".handle")
+//     .data(targetPoints)
+//   .enter().append("circle")
+//     .attr("class", "handle")
+//     .attr("transform", function(d) { return "translate(" + d + ")"; })
+//     .attr("r", 7)
+//     .call(d3.behavior.drag()
+//       .origin(function(d) { return {x: d[0], y: d[1]}; })
+//       .on("drag", dragged));
+//
+// d3.selectAll(".imgManipulator")
+//     .datum(function(d) { return JSON.parse(this.getAttribute("data-targets")); })
+//     .on("click", clicked)
+//     .call(transformed);
+//
+// function clicked(d) {
+//   d3.transition()
+//       .duration(750)
+//       .tween("points", function() {
+//         var i = d3.interpolate(targetPoints, d);
+//         return function(t) {
+//           handle.data(targetPoints = i(t)).attr("transform", function(d) { return "translate(" + d + ")"; });
+//           transformed();
+//         };
+//       });
+// }
+//
 function dragged(d) {
   d3.select(this).attr("transform", "translate(" + (d[0] = d3.event.x) + "," + (d[1] = d3.event.y) + ")");
   transformed();
 }
-
+//
 function transformed() {
   for (var a = [], b = [], i = 0, n = sourcePoints.length; i < n; ++i) {
     var s = sourcePoints[i], t = targetPoints[i];
@@ -174,7 +174,7 @@ function transformed() {
   ].map(function(x) {
     return d3.round(x, 6);
   });
-
+//
   svgTransform.style(transform, "matrix3d(" + matrix + ")");
 }
 
