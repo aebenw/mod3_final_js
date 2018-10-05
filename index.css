@@ -1,38 +1,101 @@
-
-.modal {
+/* .modal {
     display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+    /* position: fixed; /* Stay in place */
+    /* z-index: 1; /* Sit on top */ */
+    /* padding-top: 100px; /* Location of the box */ */
+    /* left: 0;
+    top: 0; */
+    /* width: 100%; /* Full width */ */
+    /* height: 100%; /* Full height */ */
+    /* overflow: auto; /* Enable scroll if needed */ */
+    /* background-color: rgb(0,0,0); /* Fallback color */ */
+    /* background-color: rgba(0,0,0,0.4); /* Black w/ opacity */ */
+/* } */
 
 /* Modal Content */
-.modal-content {
+/* .modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-}
+} */
 
 /* The Close Button */
-.close {
+/* .close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-}
+} */
 
-.close:hover,
+/* .close:hover,
 .close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+} */
+
+/* * {
+    overflow: scroll;
+} */
+#name {
+ text-transform: capitalize;
+}
+
+#imgMatrix {
+ position: relative;
+ width: 960px;
+ /* height: 500px; */
+ margin: 40px;
+}
+
+/* .peter {
+  overflow: scroll;
+  max-height: 50vh;
+} */
+
+#background {
+ width: 960px;
+ height: 500px;
+ background: url(https://simplisticallyraw.files.wordpress.com/2017/01/hja1uhg7b3ziilj4qie-g-wide.jpg
+https://simplisticallyraw.files.wordpress.com/2017/01/hja1uhg7b3ziilj4qie-g-wide.jpg
+);
+}
+
+svg {
+ position: absolute;
+ top: 0;
+ left: 0;
+}
+
+.line {
+ stroke: #000;
+ stroke-opacity: .5;
+ stroke-width: 1px;
+ stroke-linecap: square;
+}
+
+.handle {
+ fill: none;
+ pointer-events: all;
+ stroke: #fff;
+ stroke-width: 2px;
+ cursor: move;
+}
+
+#buttons {
+ position: absolute;
+ top: 20px;
+ left: 20px;
+ z-index: 2;
+}
+
+#buttons button {
+ display: block;
+ width: 10em;
+}
+
+button:focus {
+ outline: none;
 }

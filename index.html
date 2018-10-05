@@ -1,51 +1,244 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="index.css">
-    <title>Kunst</title>
-  </head>
-  <body>
-    <center>
-    <h1>Kunst</h1>
-    <h4>By Eben and Haley</h4>
 
-    <button id="signUpButton">SIGN UP</button>
-    <button id="signInButton">LOG IN</button>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <div id="signUpModal" class="modal" style="display: none">
-      <div id="signup-form" class="modal-content">
-        <span class="close" id="signUpClose">&times;</span>
-        <p class="hint-text">Enter your name to get started</p>
-        <form class="form-control signup-input" id="signUpForm">
-          <input type="text" name="name" placeholder="Please type your name">
-          <button type="submit" name="submit">Submit yo name!</button>
-        </form>
+
+  <!-- Compiled and minified JavaScript -->
+  <title>Kunst</title>
+</head>
+
+<body>
+  <h1>Kunst</h1>
+  <h4>By Eben and Haley</h4>
+
+  <!-- ~~~~~~~~~~~~~~~~LOG IN~~~~~~~~~~~~~~~~~`` -->
+  <div id="welcome">
+    <button data-target="modal1" class="btn modal-trigger">Sign Up</button>
+    <button data-target="modal2" class="btn modal-trigger">Sign In</button>
+
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <div class="row">
+          <form id="signUpForm" class="col s12">
+            <div class="row">
+              <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="last_name icon_prefix" name="name" type="text" class="validate">
+                <label for="last_name icon_prefix">First Name</label>
+              </div>
+              <div class="modal-footer">
+                <button id="signInButton" class="btn modal-trigger">Sign Up</button>
+              </div>
+            </div>
+        </div>
       </div>
+      </form>
     </div>
 
-    <div id="signInModal" class="modal" style="display: none">
-      <div id="sign-in" class="modal-content">
-        <span class="close" id="signInClose">&times;</span>
-        <p class="hint-text">Enter your name to log in</p>
-        <form class="form-control signup-input" id="signInForm">
-          <input type="text" name="name" placeholder="Please type your name">
-          <button type="submit" name="submit">Submit yo name!</button>
-        </form>
+    <div id="modal2" class="modal">
+      <div class="modal-content">
+        <div class="row">
+          <form id="signInForm" class="col s12">
+            <div class="row">
+              <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="last_name icon_prefix" name="name" type="text" class="validate">
+                <label for="last_name icon_prefix">First Name</label>
+              </div>
+              <div class="modal-footer">
+                <button id="signInButton" class="btn modal-trigger">Sign In</button>
+              </div>
+            </div>
+        </div>
       </div>
+      </form>
     </div>
 
     <br>
     <br>
 
-    <img src="https://i2.wp.com/blog.bridgemanimages.com/wp-content/uploads/2017/01/death-life-gustav-klimt.jpg?fit=805%2C340" >
 
-    <div id="profile">
-      <h1 id="name"></h1>
-      <ul id="paintings">
-      </ul>
+
+    <img src="https://i2.wp.com/blog.bridgemanimages.com/wp-content/uploads/2017/01/death-life-gustav-klimt.jpg?fit=805%2C340">
+  </div>
+
+
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~NAVBAR~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <div id="navbar" style="display:none;">
+    <button id="homeBtn" style="display:inline;">Home</button>
+    <button id="allBtn" style="display:inline;">All Paintings</button>
+    <!-- <button id="matrixBtn" style="display:inline;"></button> -->
+
+  </div>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~Profile~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <div id="profile" style="display:none">
+    <h1 id="name"></h1>
+
+  </div>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~All Paintings~~~~~~~~~~~~~~~~~~~~~ -->
+  <div class="container">
+  <div id="allPaintings" style="display:none; overflow:scroll">
+    
+  </div>
+</div>
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~Image Matrix~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <div id="imgMatrix">
+    <div id="background"></div>
+    <div id="buttons">
+      <button class="imgManipulator" data-targets="[[492,329],[542,330],[569,434],[424,424]]">Floor</button>
+      <button class="imgManipulator" data-targets="[[-28,287],[74,288],[72,413],[-31,404]]">Near Wall</button>
+      <button class="imgManipulator" data-targets="[[-194,282],[-95,282],[-100,354],[-200,365]]">Far Wall</button>
+      <button class="imgManipulator" data-targets="[[0,0],[400,0],[400,400],[0,400]]">Reset</button>
     </div>
-  </center>
-    <script type="text/javascript" src="index.js"></script>
-  </body>
+  </div>
+  </div>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="numeric-solve.min.js"></script>
+  <script>
+    var imgMatrix = document.getElementById("imgMatrix")
+    var margin = {
+        top: 50,
+        right: 280,
+        bottom: 50,
+        left: 280
+      },
+      width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
+
+    var transform = ["", "-webkit-", "-moz-", "-ms-", "-o-"].reduce(function(p, v) {
+      return v + "transform" in document.body.style ? v : p;
+    }) + "transform";
+
+    var sourcePoints = [
+        [0, 0],
+        [width, 0],
+        [width, height],
+        [0, height]
+      ],
+      targetPoints = [
+        [0, 0],
+        [width, 0],
+        [width, height],
+        [0, height]
+      ];
+
+    d3.select(imgMatrix).selectAll("svg")
+      .data(["transform", "flat"])
+      .enter().append("svg")
+      .attr("id", function(d) {
+        return d;
+      })
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var svgTransform = d3.select("#transform")
+      .style(transform + "-origin", margin.left + "px " + margin.top + "px 0");
+
+    var svgFlat = d3.select("#flat");
+
+    // svgTransform.select("g").append("image")
+    //     .attr("xlink:href", "https://images-na.ssl-images-amazon.com/images/I/41HTspbi-uL.jpg")
+    //     .attr("width", width)
+    //     .attr("height", height);
+    //
+    // svgTransform.select("g").selectAll(".line--x")
+    //     .data(d3.range(0, width + 1, 40))
+    //   .enter().append("line")
+    //     .attr("class", "line line--x")
+    //     .attr("x1", function(d) { return d; })
+    //     .attr("x2", function(d) { return d; })
+    //     .attr("y1", 0)
+    //     .attr("y2", height);
+    //
+    // svgTransform.select("g").selectAll(".line--y")
+    //     .data(d3.range(0, height + 1, 40))
+    //   .enter().append("line")
+    //     .attr("class", "line line--y")
+    //     .attr("x1", 0)
+    //     .attr("x2", width)
+    //     .attr("y1", function(d) { return d; })
+    //     .attr("y2", function(d) { return d; });
+
+    var handle = svgFlat.select("g").selectAll(".handle")
+      .data(targetPoints)
+      .enter().append("circle")
+      .attr("class", "handle")
+      .attr("transform", function(d) {
+        return "translate(" + d + ")";
+      })
+      .attr("r", 7)
+      .call(d3.behavior.drag()
+        .origin(function(d) {
+          return {
+            x: d[0],
+            y: d[1]
+          };
+        })
+        .on("drag", dragged));
+
+    d3.selectAll(".imgManipulator")
+      .datum(function(d) {
+        return JSON.parse(this.getAttribute("data-targets"));
+      })
+      .on("click", clicked)
+      .call(transformed);
+
+    function clicked(d) {
+      d3.transition()
+        .duration(750)
+        .tween("points", function() {
+          var i = d3.interpolate(targetPoints, d);
+          return function(t) {
+            handle.data(targetPoints = i(t)).attr("transform", function(d) {
+              return "translate(" + d + ")";
+            });
+            transformed();
+          };
+        });
+    }
+
+    function dragged(d) {
+      d3.select(this).attr("transform", "translate(" + (d[0] = d3.event.x) + "," + (d[1] = d3.event.y) + ")");
+      transformed();
+    }
+
+    function transformed() {
+      for (var a = [], b = [], i = 0, n = sourcePoints.length; i < n; ++i) {
+        var s = sourcePoints[i],
+          t = targetPoints[i];
+        a.push([s[0], s[1], 1, 0, 0, 0, -s[0] * t[0], -s[1] * t[0]]), b.push(t[0]);
+        a.push([0, 0, 0, s[0], s[1], 1, -s[0] * t[1], -s[1] * t[1]]), b.push(t[1]);
+      }
+
+      var X = solve(a, b, true),
+        matrix = [
+          X[0], X[3], 0, X[6],
+          X[1], X[4], 0, X[7],
+          0, 0, 1, 0,
+          X[2], X[5], 0, 1
+        ].map(function(x) {
+          return d3.round(x, 6);
+        });
+
+      svgTransform.style(transform, "matrix3d(" + matrix + ")");
+    }
+  </script>
+
+
+  <script type="text/javascript" src="index.js">
+  </script>
+</body>
+
 </html>
