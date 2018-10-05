@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const allBtn = document.getElementById("allBtn")
   const navbar = document.getElementById("navbar")
 
+
   let matrixPics = [];
 
   signUpButton.addEventListener("click", (e) => {
@@ -106,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderProfile(user){
     welcomeDiv.style.display = "none"
     navbar.style.display = "block"
-    profileDiv.style.display = "block"
+    profileDiv.style.display = "grid"
     profileDiv.dataset.user = user.id
     const paintingUl = document.getElementById('paintings-ul')
 
@@ -146,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         paintingBtn.setAttribute("name", painting.id)
         paintingBtn.innerText = "Delete"
-        paintingBtn.addEventListener('click', addToProfile)
+        paintingBtn.addEventListener('click', deletePainting)
 
         galleryBtn.setAttribute("name", painting.img_url)
         galleryBtn.dataset.pId = painting.id
@@ -258,6 +259,8 @@ function addToProfile(e){
   e.target.parentElement.append(galleryBtn)
   //--------------------------------------------//
   e.target.innerText = "Delete"
+
+  debugger
   let newPainting = e.target.parentElement.parentElement.parentElement;
   profileDiv.append(newPainting)
 
@@ -266,13 +269,51 @@ function addToProfile(e){
   let paintingId = e.target.name
   let userId = profileDiv.dataset.user
 
+
   body = {
 	"user_id": `${userId}`,
 	"painting_id": `${paintingId}`
   }
   makeUserPainting(body)
-
 }
+
+function deletePainting(e) {
+  e.preventDefault()
+
+  debugger
+
+  let paintingBtn = document.createElement('a')
+  paintingBtn.setAttribute("class", "btn btn-primary" )
+  paintingBtn.innerText = "Add Painting to your Profile"
+  paintingBtn.setAttribute("name", e.target.name)
+  paintingBtn.addEventListener('click', addToProfile)
+
+
+  let newPainting = e.target.parentElement.parentElement.parentElement;
+  let btnDiv = e.target.parentElement
+
+  while (btnDiv.firstChild) {
+    btnDiv.removeChild(btnDiv.firstChild);
+  }
+
+  btnDiv.append(paintingBtn)
+
+
+  allPaintingDiv.append(newPainting)
+  debugger
+
+  let paintingId = e.target.name
+  let userId = profileDiv.dataset.user
+
+  body = {
+	"user_id": `${userId}`,
+	"painting_id": `${paintingId}`
+  }
+  deleteUserPainting(body)
+}
+
+
+
 
 function makeUserPainting(body){
   fetch(url + "/user_paintings", {
@@ -286,7 +327,17 @@ function makeUserPainting(body){
 
 }
 
-// var sourcePoints;
+function deleteUserPainting(body){
+  fetch(url + "/user_paintings", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  }).then(res => res.json())
+    .then(console.log)
+
+}
 
 function renderGallery(){
 

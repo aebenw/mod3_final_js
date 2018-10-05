@@ -36,8 +36,25 @@
     cursor: pointer;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
+#sign-in, #signup-form {
+  display: table;
+  width: 55%;
+}
+
+#signInForm {
+  height: auto;
+}
+
 #name {
-  text-transform: capitalize;   
+  text-transform: capitalize;
+}
+
+#profile {
+  display: inline-flex;
 }
 
 #imgMatrix {
@@ -88,4 +105,8 @@ svg {
 
 button:focus {
   outline: none;
+}
+
+div #profile {
+  display: grid;
 }

@@ -12,42 +12,47 @@
 
     <h1>Kunst</h1>
     <h4>By Eben and Haley</h4>
+  </center>
+
 
 <!-- ~~~~~~~~~~~~~~~~LOG IN~~~~~~~~~~~~~~~~~`` -->
-    <div id="welcome">
-    <button id="signUpButton">SIGN UP</button>
-    <button id="signInButton">LOG IN</button>
+<center>
 
-    <div id="signUpModal" class="modal" style="display: none">
-      <div id="signup-form" class="modal-content">
-        <span class="close" id="signUpClose">&times;</span>
-        <p class="hint-text">Enter your name to get started</p>
-        <form class="form-control signup-input" id="signUpForm">
-          <input type="text" name="name" placeholder="Please type your name">
-          <button type="submit" name="submit">Submit yo name!</button>
-        </form>
-      </div>
-    </div>
+<div id="welcome">
+<button id="signUpButton">SIGN UP</button>
+<button id="signInButton">LOG IN</button>
 
-    <div id="signInModal" class="modal" style="display: none">
-      <div id="sign-in" class="modal-content">
-        <span class="close" id="signInClose">&times;</span>
-        <p class="hint-text">Enter your name to log in</p>
-        <form class="form-control signup-input" id="signInForm">
-          <input type="text" name="name" placeholder="Please type your name">
-          <button type="submit" name="submit">Submit yo name!</button>
-        </form>
-      </div>
-    </div>
+<div id="signUpModal" class="modal" style="display: none">
+  <div id="signup-form" class="modal-content">
+    <span class="close" id="signUpClose">&times;</span>
+    <p class="hint-text">Enter your name to get started</p>
+    <form class="form-control signup-input" id="signUpForm">
+      <input type="text" name="name" placeholder="Please type your name">
+      <button type="submit" name="submit">Submit yo name!</button>
+    </form>
+  </div>
+</div>
 
-    <br>
-    <br>
+<div id="signInModal" class="modal" style="display: none">
+  <div id="sign-in" class="modal-content">
+    <span class="close" id="signInClose">&times;</span>
+    <p class="hint-text">Enter your name to log in</p>
+    <form class="form-control signup-input" id="signInForm">
+      <input type="text" name="name" placeholder="Please type your name">
+      <button type="submit" name="submit">Submit yo name!</button>
+    </form>
+  </div>
+</div>
 
-      <img src="https://i2.wp.com/blog.bridgemanimages.com/wp-content/uploads/2017/01/death-life-gustav-klimt.jpg?fit=805%2C340" >
-    </div>
+<br>
+<br>
 
+  <img src="https://i2.wp.com/blog.bridgemanimages.com/wp-content/uploads/2017/01/death-life-gustav-klimt.jpg?fit=805%2C340" >
+</div>
 
+</center>
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~NAVBAR~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <center>
 
     <div id="navbar" style="display:none;">
       <button id="homeBtn" style="display:inline;">Home</button>
@@ -56,9 +61,16 @@
 
     </div>
 
+  </center>
+
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~Profile~~~~~~~~~~~~~~~~~~~~~~~ -->
     <div id="profile" style="display:none">
+    <center>
       <h1 id="name"></h1>
+      <h1 class="hidden"></h1>
+    </center>
+
+
 
     </div>
 
@@ -66,6 +78,9 @@
     <div id="allPaintings" style="display:none;">
     </div>
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~Image Matrix~~~~~~~~~~~~~~~~~~~~~~~ -->
+<center>
+
+
 <div id="imgMatrix">
 <div id="background"></div>
 <div id="buttons">
@@ -76,6 +91,8 @@
 </div>
 </div>
 </div>
+
+</center>
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="numeric-solve.min.js"></script>
 <script>
@@ -181,7 +198,7 @@ function transformed() {
 </script>
 
 
-  </center>
+  <!-- </center> -->
     <script type="text/javascript" src="index.js">
     </script>
   </body>
