@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const navbar = document.getElementById("navbar")
 
 
-  // let imgMatrix = document.getElementById
+  let imgMatrix = document.getElementById("imgMatrix")
 
   signUpButton.addEventListener("click", (e) => {
     signUpModal.style.display = "block"
@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderProfile(user){
     welcomeDiv.style.display = "none"
+    // imgMatrix.style.display = "block"
     navbar.style.display = "block"
     profileDiv.style.display = "grid"
     profileDiv.dataset.user = user.id
@@ -173,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     } else {
       let noPaintings = document.createElement("h3")
-      noPaintings.innerText = "Choose Some Paintings you Fancy"
+      noPaintings.innerText = "Choose Some Paintings You Fancy Ass"
       profileDiv.append(noPaintings)
 
       }
@@ -250,7 +251,7 @@ function addToProfile(e){
 //---------------optomistic rendering-------------------//
   e.preventDefault()
   //------------ Create Matrix Btn -------------//
-  debugger
+
   let imageLink = e.target.parentElement.parentElement.parentElement.querySelector('img').src
   let btnDiv = e.target.parentElement
     let newPainting = e.target.parentElement.parentElement.parentElement;
@@ -280,7 +281,7 @@ function addToProfile(e){
   //--------------------------------------------//
 
 
-  debugger
+
 
   profileDiv.append(newPainting)
 
@@ -300,7 +301,7 @@ function addToProfile(e){
 function deletePainting(e) {
   e.preventDefault()
 
-  debugger
+
 
   let paintingBtn = document.createElement('a')
   paintingBtn.setAttribute("class", "btn btn-primary" )
@@ -320,7 +321,7 @@ function deletePainting(e) {
 
 
   allPaintingDiv.append(newPainting)
-  debugger
+
 
   let paintingId = e.target.name
   let userId = profileDiv.dataset.user
@@ -361,12 +362,15 @@ function deleteUserPainting(body){
 
 function renderGallery(){
 
+  if (imgMatrix.style.display === "none"){
+    imgMatrix.style.display= "block"
+  }
 
 
-  var imgMatrix = document.getElementById("imgMatrix")
+  // var imgMatrix = document.getElementById("imgMatrix")
 
 
-  debugger
+
   if (imgMatrix.querySelector('g')){
     var margin = {top: 50, right: 280, bottom: 50, left: 280},
         width = 960 - margin.left - margin.right,
@@ -428,23 +432,24 @@ svgTransform.select("g").filter(":last-child").append("image")
   .attr("xlink:href", `${event.target.name}`)
   .attr("width", width)
   .attr("height", height);
-  svgTransform.selectAll('g').selectAll(".line--x")
-    .data(d3.range(0, width + 1, 40))
-  .enter().append("line")
-    .attr("class", "line line--x")
-    .attr("x1", function(d) { return d; })
-    .attr("x2", function(d) { return d; })
-    .attr("y1", 0)
-    .attr("y2", height);
 
-  svgTransform.selectAll('g').selectAll(".line--y")
-    .data(d3.range(0, height + 1, 40))
-  .enter().append("line")
-    .attr("class", "line line--y")
-    .attr("x1", 0)
-    .attr("x2", width)
-    .attr("y1", function(d) { return d; })
-    .attr("y2", function(d) { return d; });
+  // svgTransform.selectAll('g').selectAll(".line--x")
+  //   .data(d3.range(0, width + 1, 4000))
+  // .enter().append("line")
+  //   .attr("class", "line line--x")
+  //   .attr("x1", function(d) { return d; })
+  //   .attr("x2", function(d) { return d; })
+  //   .attr("y1", 0)
+  //   .attr("y2", height);
+  //
+  // svgTransform.selectAll('g').selectAll(".line--y")
+  //   .data(d3.range(0, height + 1, 4000))
+  // .enter().append("line")
+  //   .attr("class", "line line--y")
+  //   .attr("x1", 0)
+  //   .attr("x2", width)
+  //   .attr("y1", function(d) { return d; })
+  //   .attr("y2", function(d) { return d; });
 
 var handle = svgFlat.select("g").selectAll(".handle")
         .data(targetPoints)
@@ -505,7 +510,7 @@ var svgTransform = d3.select("#transform")
 var svgFlat = d3.select("#flat");
 
   svgTransform.selectAll('g').selectAll(".line--x")
-    .data(d3.range(0, width + 1, 40))
+    .data(d3.range(0, width + 1, 400))
   .enter().append("line")
     .attr("class", "line line--x")
     .attr("x1", function(d) { return d; })
@@ -514,7 +519,7 @@ var svgFlat = d3.select("#flat");
     .attr("y2", height);
 
   svgTransform.selectAll('g').selectAll(".line--y")
-    .data(d3.range(0, height + 1, 40))
+    .data(d3.range(0, height + 1, 400))
   .enter().append("line")
     .attr("class", "line line--y")
     .attr("x1", 0)
